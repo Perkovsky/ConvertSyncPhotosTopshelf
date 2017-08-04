@@ -16,14 +16,7 @@ namespace ConvertSyncPhotosTopshelf
                 x.Service<Watcher>(s =>
                 {
                     s.ConstructUsing(name => new Watcher(new Logger()));
-                    s.WhenStarted(tc =>
-                    {
-                        if (!tc.Start())
-                        {
-                            tc.Log(string.Format(@"{0}\settings.xml", GeneralMethods.GetCurrentDirectory()), "Not started! Specify settings.");
-                        }
-                        //tc.Start();
-                    });
+                    s.WhenStarted(tc => tc.Start());
                     s.WhenStopped(tc => tc.Stop());
                 });
                 x.RunAsLocalSystem();
