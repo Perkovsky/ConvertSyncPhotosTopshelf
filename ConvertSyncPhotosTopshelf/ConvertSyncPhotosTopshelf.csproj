@@ -58,6 +58,8 @@
   <ItemGroup>
     <Compile Include="Converter.cs" />
     <Compile Include="GeneralMethods.cs" />
+    <Compile Include="ILog.cs" />
+    <Compile Include="LoggerTest.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

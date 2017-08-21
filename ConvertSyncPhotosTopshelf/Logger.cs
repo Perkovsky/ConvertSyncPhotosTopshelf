@@ -4,15 +4,6 @@ using System.IO;
 namespace ConvertSyncPhotosTopshelf
 {
     /// <summary>
-    /// This interface is required for DI
-    /// </summary>
-    public interface ILog
-    {
-        bool NeedToLog { set; }
-        void Log(string fileName, string typeAction);
-    }
-
-    /// <summary>
     /// This class is needed to log the operation of the service
     /// </summary>
     public class Logger : ILog
