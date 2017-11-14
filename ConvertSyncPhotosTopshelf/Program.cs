@@ -10,6 +10,7 @@ namespace ConvertSyncPhotosTopshelf
             {
                 x.Service<Watcher>(s =>
                 {
+                    //s.ConstructUsing(name => new Watcher(new LoggerTest())); // only for test: write log to console
                     s.ConstructUsing(name => new Watcher(new Logger()));
                     s.WhenStarted(tc => tc.Start());
                     s.WhenStopped(tc => tc.Stop());

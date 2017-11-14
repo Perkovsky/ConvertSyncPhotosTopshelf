@@ -13,8 +13,6 @@ namespace ConvertSyncPhotosTopshelf
     /// </summary>
     public class Converter
     {
-        private readonly int WIDTH = 200;
-        private readonly int HEIGHT = 150;
         private readonly int QUALITY = 40;
 
         /// <summary>
@@ -32,7 +30,8 @@ namespace ConvertSyncPhotosTopshelf
             }
         }
 
-        public void Resize(Watcher watcher, string sourceFullFileName, string sourceDirectoryName, string destDirectoryName)
+        public void Resize(Watcher watcher, string sourceFullFileName, string sourceDirectoryName, 
+            string destDirectoryName, int width, int height)
         {
             #region get destFileName
             string sourceFileName = Path.GetFileName(sourceFullFileName);
@@ -60,7 +59,7 @@ namespace ConvertSyncPhotosTopshelf
                 // format is automatically detected though can be changed.
                 ISupportedImageFormat format = new JpegFormat { Quality = QUALITY };
                 //ISupportedImageFormat format = new WebPFormat { Quality = QUALITY }; // see: https://ru.wikipedia.org/wiki/WebP
-                Size size = new Size(WIDTH, 0);
+                Size size = new Size(width, 0);
                 using (MemoryStream inStream = new MemoryStream(photoBytes))
                 {
                     // initialize the ImageFactory using the overload to preserve EXIF metadata.
@@ -73,17 +72,18 @@ namespace ConvertSyncPhotosTopshelf
                                     .Save(destFileName);
                     }
                 }
-                watcher.Log(destFileName, $"Copied & Resized to {WIDTH}x{HEIGHT}");
+                watcher.Log(destFileName, $"Copied & Resized to {width}x{height}");
             }
             catch (Exception e)
             {
-                watcher.Log(destFileName, $"Copy & Resize to {WIDTH}x{HEIGHT} error:" + Environment.NewLine + e.ToString());
+                watcher.Log(destFileName, $"Copy & Resize to {width}x{height} error:" + Environment.NewLine + e.ToString());
             }
         }
 
-        public async Task ResizeAsync(Watcher watcher, string sourceFullFileName, string sourceDirectoryName, string destDirectoryName)
+        public async Task ResizeAsync(Watcher watcher, string sourceFullFileName, string sourceDirectoryName, 
+            string destDirectoryName, int width, int height)
         {
-            var task = new Task(() => Resize(watcher, sourceFullFileName, sourceDirectoryName, destDirectoryName));
+            var task = new Task(() => Resize(watcher, sourceFullFileName, sourceDirectoryName, destDirectoryName, width, height));
             task.Start();
             await task;
         }

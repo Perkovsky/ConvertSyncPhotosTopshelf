@@ -8,6 +8,9 @@ namespace ConvertSyncPhotosTopshelf
     /// </summary>
     public class Watcher: IDisposable
     {
+        private readonly string FULL = "full";
+        private readonly string PREV = "prev";
+
         private string watcherDirectory;
         private string convertDirectory;
         private FileSystemWatcher watcher;
@@ -77,7 +80,8 @@ namespace ConvertSyncPhotosTopshelf
 
             Log(currentFileName, e.ChangeType.ToString());
 
-            await converter.ResizeAsync(this, currentFileName, watcherDirectory, convertDirectory);
+            await converter.ResizeAsync(this, currentFileName, watcherDirectory, $"{convertDirectory}\\{FULL}\\", 1024, 768);
+            await converter.ResizeAsync(this, currentFileName, watcherDirectory, $"{convertDirectory}\\{PREV}\\", 200, 150);
         }
 
         public bool Start()
